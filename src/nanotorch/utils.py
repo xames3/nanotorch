@@ -14,7 +14,7 @@ See https://github.com/xames3/nanotorch/ for more help.
 
 import random
 
-from nanotorch.types import Colors
+from nanotorch._types import Colors
 
 
 class Generator:
