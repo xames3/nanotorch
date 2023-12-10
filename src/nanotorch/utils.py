@@ -4,7 +4,7 @@ NanoTorch Utilities API
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, December 03 2023
-Last updated on: Wednesday, December 06 2023
+Last updated on: Saturday, December 09 2023
 
 See https://github.com/xames3/nanotorch/ for more help.
 
@@ -14,16 +14,16 @@ See https://github.com/xames3/nanotorch/ for more help.
 
 import random
 
-__all__ = ["Generator", "colors"]
+from nanotorch.types import Colors
 
 
 class Generator:
     """Creates and returns a generator object that manages the state of
     the algorithm which produces pseudo random numbers.
 
-    This class is a wrapper around Python's ``random.Random`` class,
-    providing an interface to generate random numbers. It can be
-    initialized with an optional seed to ensure reproducibility.
+    This class is a wrapper around ``random.seed`` function, providing
+    an interface to generate random numbers. It can be initialized with
+    an optional seed to ensure reproducibility.
     """
 
     def __init__(self) -> None:
@@ -43,7 +43,7 @@ class Generator:
         return random.seed(self.seed)
 
 
-colors = [
+colors: Colors = (
     "lightblue",
     "lightblue1",
     "lightblue2",
@@ -93,4 +93,4 @@ colors = [
     "lightyellow2",
     "lightyellow3",
     "lightyellow4",
-]
+)
