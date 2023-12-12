@@ -4,7 +4,7 @@ NanoTorch Logging API
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Saturday, December 02 2023
-Last updated on: Wednesday, December 06 2023
+Last updated on: Saturday, December 09 2023
 
 Log NanoTorch's messages.
 
@@ -132,6 +132,9 @@ def _select_log_level(level: int | str) -> int:
 
     :param level: Verbosity counter value or the implicit logging level.
     :returns: Logging level.
+
+    .. versionchanged:: 1.0.1
+        Function returns default logging level of 0, ``debug``.
     """
     env_level = os.getenv("NANOTORCH_LOGGING_LEVEL")
     if env_level:
@@ -140,6 +143,7 @@ def _select_log_level(level: int | str) -> int:
         return _logging_level_map[level]  # Unnecessary but required :(
     if level in (00, 10, 20, 30, 40, 50, 60):
         return level
+    return 00
 
 
 def _use_color(choice: bool) -> str:
