@@ -31,9 +31,9 @@ class Generator:
 
         This will initialize a new ``Generator`` object with no seed.
         """
-        self.seed = None
+        self.seed: int | None = None
 
-    def manual_seed(self, seed: int) -> int:
+    def manual_seed(self, seed: int) -> None:
         """Sets the seed for generating random numbers.
 
         :param seed: An optional seed for the random number generator,
