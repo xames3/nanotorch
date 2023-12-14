@@ -4,7 +4,7 @@ NanoTorch Exceptions API
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Saturday, December 02 2023
-Last updated on: Saturday, December 09 2023
+Last updated on: Wednesday, December 13 2023
 
 All about Exceptions
 
@@ -78,14 +78,14 @@ class NanoTorchException(Exception):
     This exception class serves as the primary entrypoint for capturing
     and logging exceptions related to all the operations.
 
-    :var _description: A human-readable description or message
-                       explaining the reason for the exception.
+    :param description: A human-readable description or message
+                        explaining the reason for the exception.
     """
 
-    _description: str
-
     def __init__(self, description: str | None, *args: t.Any) -> None:
-        if description:
-            self._description = description
-        _logger.error(self._description)
-        super().__init__(self._description, *args)
+        _logger.error(description)
+        super().__init__(description, *args)
+
+
+class IncorrectRoundingModeError(NanoTorchException):
+    """Error to be raised when incorrect rounding mode is passed."""
