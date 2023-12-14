@@ -65,6 +65,7 @@ See https://github.com/xames3/nanotorch/ for more help.
 """
 
 from nanotorch._tensor import add as add
+from nanotorch._tensor import arange as arange
 from nanotorch._tensor import div as div
 from nanotorch._tensor import divide as divide
 from nanotorch._tensor import mul as mul

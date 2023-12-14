@@ -4,7 +4,7 @@ NanoTorch Tensor API
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, December 03 2023
-Last updated on: Wednesday, December 13 2023
+Last updated on: Thursday, December 14 2023
 
 Scalar-Level Tensor
 
@@ -472,6 +472,26 @@ def zeros() -> tensor:
 def ones() -> tensor:
     """Returns a tensor filled with the scalar value 1."""
     return tensor(1.000)
+
+
+def arange(end: Number, start: Number = 0, step: Number = 1) -> tensor:
+    """Returns a list of tensors with values from the interval [start,
+    end) taken with common difference step beginning from start.
+
+    :param end: The ending value for the set of points.
+    :param start: The starting value for the set of points, defaults to
+                  ``0``.
+    :param step: The gap between each pair of adjacent points, defaults
+                 to ``1``.
+    :returns: List of output tensors.
+    """
+    if start:
+        start, end = end, start
+    out: list[tensor] = []
+    while start < end:
+        out.append(tensor(start))
+        start += step
+    return out
 
 
 def tanh(input: tensor) -> tensor:
