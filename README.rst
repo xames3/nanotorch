@@ -47,8 +47,8 @@ now, our tensors support basic arithmetic functionalities found in PyTorch.
 
 .. code:: python
 
-    >>> a = tensor(2.0)
-    >>> b = tensor(3.0)
+    >>> a = nanotorch.tensor(2.0)
+    >>> b = nanotorch.tensor(3.0)
     >>> a + b
     tensor(5.0)
     >>> a - 6
@@ -56,7 +56,12 @@ now, our tensors support basic arithmetic functionalities found in PyTorch.
     >>> c = a + b
     >>> c += 2 * a / b
     >>> c = c ** 3
-
+    >>> nanotorch.arange(5)
+    [tensor(0), tensor(1), tensor(2), tensor(3), tensor(4)]
+    >>> nanotorch.arange(1, 4)
+    [tensor(1), tensor(2), tensor(3)]
+    >>> nanotorch.arange(1, 2.5, 0.5)
+    [tensor(1), tensor(1.5), tensor(2.)]
 
 2. **Automatic Differentiation:** A pivotal feature of this project is a
 simplistic version of automatic differentiation, akin to PyTorch's
