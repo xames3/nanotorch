@@ -4,7 +4,7 @@ NanoTorch
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Saturday, December 02 2023
-Last updated on: Wednesday, December 13 2023
+Last updated on: Thursday, December 14 2023
 
 Small-scale implementation of PyTorch from the ground up.
 
