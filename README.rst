@@ -73,14 +73,6 @@ is essential for training neural networks.
     >>> c.backward()
     >>> print(a.grad)  # prints 200.55 as the gradient with respect to c i.e dc/da
 
-3. **Neural Network Modules:** The implementation includes rudimentary neural
-network modules such as linear layers and activation functions. These modules
-can be composed to construct simple neural network architectures.
-
-4. **Optimizers and Loss Functions:** Basic optimizers like SGD and common
-loss functions are included to facilitate the training process of neural
-networks.
-
 Educational Value
 -----------------
 
