@@ -4,7 +4,7 @@ NanoTorch Tensor API
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, December 03 2023
-Last updated on: Thursday, December 14 2023
+Last updated on: Friday, March 08 2024
 
 Scalar-Level Tensor
 
@@ -71,12 +71,13 @@ and eagerly anticipated.
 
 See https://github.com/xames3/nanotorch/ for more help.
 
-:copyright: (c) 2023 Akshay Mestry (XAMES3). All rights reserved.
+:copyright: (c) 2024 Akshay Mestry (XAMES3). All rights reserved.
 :license: MIT, see LICENSE for more details.
 """
 
 from __future__ import annotations
 
+import functools
 import math
 import random
 import typing as t
@@ -92,6 +93,7 @@ if t.TYPE_CHECKING:
     from nanotorch.utils import Generator
 
 
+@functools.total_ordering
 class tensor:
     """Class to represent tensors with no autograd history."""
 
@@ -108,7 +110,7 @@ class tensor:
         # This also means that changing ``grad`` will not change the
         # loss function.
         self.grad = 0.0
-        self.grad_fn = lambda: None
+        self.grad_fn = functools.partial(object)
         self.label = str()
         self.operator = str()
 
@@ -235,6 +237,11 @@ class tensor:
         """
         return tensor(round(self.data, ndigits))
 
+    def __lt__(self, other: tensor | Number) -> bool:
+        """Implementation of less than operation."""
+        other = other if isinstance(other, tensor) else tensor(other)
+        return self.data < other.data
+
     def _generate_nodes_and_edges(self) -> tuple[set[t.Any], ...]:
         """Build a set of nodes and edges from the tensor.
 
@@ -280,20 +287,21 @@ class tensor:
                 understand how the nodes and edges of the graph are
                 built.
         """
-        graph = Digraph(
-            name="Node Graph",
-            graph_attr={"rankdir": "LR"},
-        )
+        graph = Digraph(name="Node Graph", graph_attr={"rankdir": "LR"})
         nodes, edges = self._generate_nodes_and_edges()
         for node in nodes:
             tensor = str(id(node))
             graph.node(
                 name=tensor,
-                label="{ %s | data %.4f | grad %.4f}"
-                % (node.label, node.data, node.grad),
+                label=(
+                    f"node = {node.label}\n"
+                    f"data = {node.data:.4f}\n"
+                    f"grad = {node.grad:.4f}"
+                ),
                 fillcolor=random.choice(colors),
-                shape="record",
+                shape="circle",
                 style="filled",
+                width="0.02",
             )
             if node.operator:
                 operator = tensor + node.operator
@@ -447,7 +455,7 @@ def true_divide(
     return div(dividend, divisor, rounding_mode=None)
 
 
-def neg(input: tensor | Number) -> tensor:
+def neg(input: tensor | Number) -> tensor | Number:
     """Returns a new tensor with the negative of the input."""
     return -1 * input
 
@@ -474,7 +482,7 @@ def ones() -> tensor:
     return tensor(1.000)
 
 
-def arange(end: Number, start: Number = 0, step: Number = 1) -> tensor:
+def arange(end: Number, start: Number = 0, step: Number = 1) -> list[tensor]:
     """Returns a list of tensors with values from the interval [start,
     end) taken with common difference step beginning from start.
 
@@ -514,12 +522,12 @@ def tanh(input: tensor) -> tensor:
 
 def relu(input: tensor) -> tensor:
     """Applies the rectified linear unit function."""
-    result = tensor(0.0 if input.data < 0 else input)
+    result = tensor(0.0 if input.data < 0.0 else input.data)  # type: ignore
     result.nodes = {input}
     result.operator = "relu"
 
     def grad_fn() -> None:
-        input.grad += (result > 0) * result.grad
+        input.grad += (result > 0) * result.grad  # type: ignore
 
     result.grad_fn = grad_fn
     return result
