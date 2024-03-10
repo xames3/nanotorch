@@ -522,12 +522,12 @@ def tanh(input: tensor) -> tensor:
 
 def relu(input: tensor) -> tensor:
     """Applies the rectified linear unit function."""
-    result = tensor(0.0 if input.data < 0.0 else input.data)  # type: ignore
+    result = tensor(0.0 if input.data < 0.0 else input.data)
     result.nodes = {input}
     result.operator = "relu"
 
     def grad_fn() -> None:
-        input.grad += (result > 0) * result.grad  # type: ignore
+        input.grad += (result > 0) * result.grad
 
     result.grad_fn = grad_fn
     return result
