@@ -12,8 +12,10 @@ See https://github.com/xames3/nanotorch/ for more help.
 :license: MIT, see LICENSE for more details.
 """
 
+import os
 import typing as t
 
+FILE_LIKE: t.TypeAlias = str | os.PathLike | t.BinaryIO | t.IO[bytes]
 Colors = tuple[str, ...]
 Number = int | float | bool
 Size = t.Sequence[int]
