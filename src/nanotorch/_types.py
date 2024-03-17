@@ -4,7 +4,7 @@ NanoTorch Types
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Saturday, December 09 2023
-Last updated on: Saturday, December 09 2024
+Last updated on: Wednesday, March 13 2024
 
 See https://github.com/xames3/nanotorch/ for more help.
 
@@ -15,7 +15,10 @@ See https://github.com/xames3/nanotorch/ for more help.
 import os
 import typing as t
 
+import numpy as np
+
 FILE_LIKE: t.TypeAlias = str | os.PathLike | t.BinaryIO | t.IO[bytes]
-Colors = tuple[str, ...]
-Number = int | float | bool
+
+Data = np.ndarray[t.Any, np.dtype[t.Any]]
+NodesAndEdges = tuple[set[t.Any], ...]
 Size = t.Sequence[int]

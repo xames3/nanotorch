@@ -4,7 +4,7 @@ NanoTorch
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Saturday, December 02 2023
-Last updated on: Thursday, December 14 2023
+Last updated on: Saturday, March 16 2024
 
 Small-scale implementation of PyTorch from the ground up.
 
@@ -60,35 +60,39 @@ machine learning and the open-source community at large.
 
 See https://github.com/xames3/nanotorch/ for more help.
 
-:copyright: (c) 2023 Akshay Mestry (XAMES3). All rights reserved.
+:copyright: (c) 2024 Akshay Mestry (XAMES3). All rights reserved.
 :license: MIT, see LICENSE for more details.
 """
 
-from nanotorch._tensor import add as add
-from nanotorch._tensor import arange as arange
-from nanotorch._tensor import div as div
-from nanotorch._tensor import divide as divide
-from nanotorch._tensor import mul as mul
-from nanotorch._tensor import multiply as multiply
-from nanotorch._tensor import neg as neg
-from nanotorch._tensor import negative as negative
-from nanotorch._tensor import ones as ones
-from nanotorch._tensor import rand as rand
-from nanotorch._tensor import sub as sub
-from nanotorch._tensor import subtract as subtract
+from __future__ import annotations
+
+import typing as t
+
+import numpy as np
+
+from nanotorch import optim as optim
+from nanotorch._tensor import from_numpy as from_numpy
+from nanotorch._tensor import relu as relu
 from nanotorch._tensor import tanh as tanh
 from nanotorch._tensor import tensor as tensor
-from nanotorch._tensor import true_divide as true_divide
-from nanotorch._tensor import zeros as zeros
-from nanotorch._types import Colors as Colors
-from nanotorch._types import Number as Number
-from nanotorch._types import Size as Size
-from nanotorch.exceptions import (
-    IncorrectRoundingModeError as IncorrectRoundingModeError,
-)
-from nanotorch.exceptions import NanoTorchException as NanoTorchException
-from nanotorch.logger import create_logger as create_logger
-from nanotorch.logger import get_logger as get_logger
-from nanotorch.utils import Generator as Generator
-from nanotorch.utils import colors as colors
+from nanotorch._types import FILE_LIKE as FILE_LIKE
+from nanotorch._types import Data as Data
+from nanotorch._types import NodesAndEdges as NodesAndEdges
 from nanotorch.version import __version__ as __version__
+
+
+def __getattr__(name: str) -> t.Any:
+    """Delegate missing attributes to respective modules.
+
+    This function is called when an attribute that does not exist in
+    the ``nanotorch`` module is accessed.
+
+    :param name: The name of the attribute being accessed.
+    """
+    try:
+        attr = getattr(np, name)
+        if isinstance(attr, np.dtype) or issubclass(attr, np.generic):
+            return attr
+    except AttributeError:
+        pass
+    raise AttributeError(f"module 'nanotorch' has no attribute {name!r}")
