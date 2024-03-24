@@ -42,3 +42,4 @@ share/python-wheels/
 var/
 venv/
 wheels/
+archive/
